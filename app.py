@@ -1,8 +1,6 @@
 from flask import Flask,render_template,request, jsonify
 import google.generativeai as palm
 import os, pickle
-import pickle
-import numpy as np
 from textblob import TextBlob
 
 api = os.getenv("MAKERSUITE_API_TOKEN") 
