@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robo Advisor</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <img src="https://media.istockphoto.com/id/1634086519/photo/human-and-robot-hands-forming-a-heart-shape-together-ai-and-human-collaboration-concept.jpg?s=1024x1024&w=is&k=20&c=y-Hh5I7_kkPvympGEHh_aG9tc9_78YN3X-3dAoHxhVw=" width="320" height="240" alt="AI and Human Collaboration">
+    <h2>Welcome to Robo Advisor</h2>
+
+    <form action="/financial_QA" method="post">
+        <input type="submit" value="Financial Q&A">
+    </form>
+    <form action="/prediction" method="post">
+        <input type="submit" value="Prediction">
+    </form>
+
+    <button id="jokeBtn">Get Joke</button>
+    <p id="jokeOutput"></p>
+
+    <h3>Analyse News Sentiment</h3>
+    <textarea id="newsText" rows="4" cols="50" placeholder="Enter news or financial text here..."></textarea>
+    <br>
+    <button id="analyzeSentiment">Analyse Sentiment</button>
+    <p id="sentimentResult"></p>
+
+    <script>
+        $(document).ready(function() {
+            $('#jokeBtn').click(function() {
+                $.get('/joke', function(data) {
+                    $('#jokeOutput').text(data.text);
+                });
+            });
+
+            $('#analyzeSentiment').click(function() {
+                var text = $('#newsText').val();
+                $.ajax({
+                    url: '/analyze_sentiment',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({text: text}),
+                    success: function(response) {
+                        var sentiment = response.sentiment;
+                        var result = "Sentiment: " + sentiment.toFixed(2) + " (" +
+                                     (sentiment > 0 ? "Positive" : sentiment < 0 ? "Negative" : "Neutral") + ")";
+                        $('#sentimentResult').text(result);
+                    },
+                    error: function(xhr, status, error) {
+                        $('#sentimentResult').text('Error occurred during sentiment analysis');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
