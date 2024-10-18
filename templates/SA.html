@@ -1,0 +1,18 @@
+<head>
+    <title>Financial Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{url_for('static',filename='style.css')}}">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Text Sentiment Analysis : </h2>
+        <form action="/SAR" method="post">
+            <input type="text" name="q">
+            <input type="submit" value="Enter">
+        </form>
+        <form action="/" method="post">
+            <input type="submit" value="Main">
+        </form>
+</div>
+</body>
